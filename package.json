@@ -1,7 +1,7 @@
 {
   "name": "ui-animate",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.2",
+  "description": "Powerful CSS animations in a snap.",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -49,6 +49,7 @@
     "merge": "^1.2.0"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "demoURL": "https://ui-animate.firebaseapp.com/"
   }
 }

@@ -13,7 +13,7 @@
     Refer to the <a href="http://daneden.github.io/animate.css" target="_new">{{ui-label 'animate.css'}}</a> website for all the default animations. If you want to add your own all you need do is define your own class name (and likely a set of <i>@keyframes</i>). Look at the source of the <a href="https://github.com/daneden/animate.css/blob/master/source/attention_seekers/bounce.css">bounce effect</a> to get a feeling for it.
   </p>
 
-  <h3>Using as an inline component w/ in a component</h3>
+  <h3>Using as inline component w/in an Ember component</h3>
   <div class="row">
     <div class="col-xs-3">
       {{#ui-button}}
@@ -43,14 +43,15 @@
         press me
       </button>
     </div>
-    {{ui-animate 'shake' domElement='myButton' delay=0 duration=9000 event='click'}}
+    {{ui-animate 'shake' domElement='myButton' delay=0 event='click'}}
     <div class="col-xs-4">
 <pre><code>&lt;button id='myButton'>
   press me
 &lt;/button>
 \{{ui-animate 'shake'
   domElement='myButton'
-  delay=1500
+  delay=0
+  event='click'
 }}
 </code></pre>
     </div>
@@ -69,17 +70,24 @@
   </p>
 
   <h3>Using as a block component</h3>
-  <div class="col-xs-5">
-    {{#ui-animate 'shake'}}
-      {{ui-button title='press me'}}
-    {{/ui-animate}}
-  </div>
-  <div class="col-xs-7">
-<pre><code>
-\{{#ui-animate 'shake'}}
+  <div class="row">
+    <div class="col-xs-3">
+      {{#ui-animate 'bounceIn'}}
+        {{ui-button title='press me'}}
+        <br>
+        or don't; it's up to you
+      {{/ui-animate}}
+    </div>
+    <div class="col-xs-4">
+  <pre><code>\{{#ui-animate 'bounceIn'}}
   \{{ui-button title='press me'}}
-\{{/ui-animate}}
-</code></pre>
+  &lt;br>
+  or don't; it's up to you
+\{{/ui-animate}}</code></pre>
+    </div>
+    <div class="col-xs-5">
+      Possibly the nicest way to use this component is as a block component. It will wrap whatever you put inside the block and animate it.
+    </div>
   </div>
 
 </div>
