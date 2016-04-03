@@ -1,3 +1,88 @@
-<h2 id="title">Welcome to Ember</h2>
+<div class="container">
 
-{{outlet}}
+  <p>
+    <br>
+  </p>
+  <h2 id="title">ui-animate</h2>
+
+  <h3>Overview</h3>
+  <p>
+    The idea is to provide a CSS based animation primitive which has no dependency on jQuery. It leverages the popular <a href="https://github.com/daneden/animate.css" target="_new">{{ui-label 'animate.css'}}</a> library (which is just a set of CSS animations, no JS). Just 51kb in size.
+  </p>
+  <p>
+    Refer to the <a href="http://daneden.github.io/animate.css" target="_new">{{ui-label 'animate.css'}}</a> website for all the default animations. If you want to add your own all you need do is define your own class name (and likely a set of <i>@keyframes</i>). Look at the source of the <a href="https://github.com/daneden/animate.css/blob/master/source/attention_seekers/bounce.css">bounce effect</a> to get a feeling for it.
+  </p>
+
+  <h3>Using as an inline component w/ in a component</h3>
+  <div class="row">
+    <div class="col-xs-3">
+      {{#ui-button}}
+        press me
+        {{ui-animate 'swing'}}
+      {{/ui-button}}
+    </div>
+    <div class="col-xs-4">
+<pre><code>\{{#ui-button}}
+  press me
+  \{{ui-animate 'swing'}}
+\{{/ui-button}}</code></pre>
+    </div>
+    <div class="col-xs-5">
+      When used inside an Ember block component, the {{ui-pill 'ui-animate'}} component will automatically target the "parentView" and animate it based on the stated event. Since the event isn't explicitly stated then the default "onload" event is used.
+    </div>
+  </div>
+
+  <p>
+    <br>
+  </p>
+
+  <h3>Targeting a specific DOM element</h3>
+  <div class="row">
+    <div class="col-xs-3">
+      <button id='myButton'>
+        press me
+      </button>
+    </div>
+    {{ui-animate 'shake' domElement='myButton' delay=0 duration=9000 event='click'}}
+    <div class="col-xs-4">
+<pre><code>&lt;button id='myButton'>
+  press me
+&lt;/button>
+\{{ui-animate 'shake'
+  domElement='myButton'
+  delay=1500
+}}
+</code></pre>
+    </div>
+    <div class="col-xs-5">
+      <p>
+        If you want to target any specific DOM element with an animation effect that too is possible by leveraging the <b>domElement</b> property on {{ui-pill 'ui-animate'}}. Doesn't matter if this target is an Ember component or not.
+      </p>
+      <p>
+        In this example we're also using the <b>delay</b> property which indicates how many miliseconds it should wait before starting the animation. This can be used in conjunction with any of the supported events but will be frequently be used with the default <i>onload</i> event.
+      </p>
+    </div>
+  </div>
+
+  <p>
+    <br>
+  </p>
+
+  <h3>Using as a block component</h3>
+  <div class="col-xs-5">
+    {{#ui-animate 'shake'}}
+      {{ui-button title='press me'}}
+    {{/ui-animate}}
+  </div>
+  <div class="col-xs-7">
+<pre><code>
+\{{#ui-animate 'shake'}}
+  \{{ui-button title='press me'}}
+\{{/ui-animate}}
+</code></pre>
+  </div>
+
+</div>
+<p>
+  <br>
+</p>

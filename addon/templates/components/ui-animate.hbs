@@ -1,0 +1,7 @@
+{{#if hasBlock}}
+  <div id="animator-{{elementId}}">
+    {{yield}}
+  </div>
+{{else}}
+  {{! inline uses ID of parent container as target }}
+{{/if}}

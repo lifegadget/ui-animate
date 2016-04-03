@@ -2,6 +2,9 @@
 
 module.exports = function(environment) {
   var ENV = {
+    uiBootstrap: {
+      useSASS: false
+    },
     modulePrefix: 'dummy',
     environment: environment,
     baseURL: '/',
