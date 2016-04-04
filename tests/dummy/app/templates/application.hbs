@@ -15,20 +15,27 @@
 
   <h3>Using as inline component w/in an Ember component</h3>
   <div class="row">
-    <div class="col-xs-3">
-      {{#ui-button}}
-        press me
+    <div class="col-xs-2">
+      {{#ui-pill tagName='div'}}
+        Swinging
         {{ui-animate 'swing'}}
-      {{/ui-button}}
-    </div>
-    <div class="col-xs-4">
-<pre><code>\{{#ui-button}}
-  press me
-  \{{ui-animate 'swing'}}
-\{{/ui-button}}</code></pre>
+      {{/ui-pill}}
     </div>
     <div class="col-xs-5">
-      When used inside an Ember block component, the {{ui-pill 'ui-animate'}} component will automatically target the "parentView" and animate it based on the stated event. Since the event isn't explicitly stated then the default "onload" event is used.
+<pre><code>\{{#ui-pill tagName='div'}}
+  Swinging
+  \{{ui-animate 'swing'}}
+\{{/ui-pill}}</code></pre>
+    </div>
+    <div class="col-xs-5">
+      <p>
+        When used inside an Ember block component, the {{ui-pill 'ui-animate'}} component will automatically target the "parentView" and animate it based on the stated event. Since the event isn't explicitly stated then the default "load" event is used.
+      </p>
+      <p>
+        <note>
+          <b>Note:</b> if the parent component has <b>tagName</b> set to <i>null</i> then it doesn't actually occupy any space in the DOM by default (even if its template does). In this case we do run into this with the {{ui-pill 'ui-pill'}} component but we can just set the tagName as DIV
+        </note>
+      </p>
     </div>
   </div>
 
@@ -38,20 +45,23 @@
 
   <h3>Targeting a specific DOM element</h3>
   <div class="row">
-    <div class="col-xs-3">
-      <button id='myButton'>
-        press me
-      </button>
+    <div class="col-xs-2">
+      <div id='myEffect'>
+        <img src="images/rubber-duck.png" alt="" width="150px">
+        <center>Rubber Ducky!</center>
+      </div>
     </div>
-    {{ui-animate 'shake' domElement='myButton' delay=0 event='click'}}
-    <div class="col-xs-4">
-<pre><code>&lt;button id='myButton'>
-  press me
-&lt;/button>
-\{{ui-animate 'shake'
-  domElement='myButton'
-  delay=0
-  event='click'
+    {{ui-animate 'rollIn' domElement='myEffect' delay=1 duration=4}}
+    <div class="col-xs-5">
+<pre><code>&lt;div id='myEffect'>
+  &lt;img src="images/rubber-duck.png">
+  &lt;center>Rubber Ducky!&lt;/center>
+&lt;/div>
+
+\{{ui-animate 'rollIn'
+  domElement='myEffect'
+  delay=1
+  duration=4
 }}
 </code></pre>
     </div>
@@ -71,22 +81,47 @@
 
   <h3>Using as a block component</h3>
   <div class="row">
-    <div class="col-xs-3">
-      {{#ui-animate 'bounceIn' duration=2}}
+    <div class="col-xs-2">
+      {{#ui-animate 'rubberBand' duration=2 event='click'}}
         {{ui-button title='press me'}}
         <br>
         or don't; it's up to you
       {{/ui-animate}}
     </div>
-    <div class="col-xs-4">
-  <pre><code>\{{#ui-animate 'bounceIn'}}
+    <div class="col-xs-5">
+  <pre><code>\{{#ui-animate 'rubberBand' event='click'}}
   \{{ui-button title='press me'}}
   &lt;br>
   or don't; it's up to you
 \{{/ui-animate}}</code></pre>
     </div>
     <div class="col-xs-5">
-      Possibly the nicest way to use this component is as a <i>block component</i>. It will wrap whatever you put inside the block and animate it.
+      <p>
+        Possibly the nicest way to use this component is as a <i>block component</i>. It will wrap whatever you put inside the block and animate it.
+      </p>
+      <p>
+        This example also illustrates the use of different event ... a "click" in this case ... instead of the default of "load". You can use any DOM event you like here.
+      </p>
+      <p>
+        Also note that in this use-case, it matters not whether the surrounding content is block-style or not, nor does it matter contained components are
+      </p>
+    </div>
+  </div>
+
+  <h3>To Infinity and Beyond</h3>
+  <div class="row">
+    <div class="col-xs-2">
+      {{#ui-animate 'bounce' iterations='infinite'}}
+        <img src='images/buzz-lightyear.png' width='150px'/>
+      {{/ui-animate}}
+    </div>
+    <div class="col-xs-5">
+  <pre><code>\{{#ui-animate 'bounce' iterations='infinite'}}
+  &lt;img src='images/buzz-lightyear.png'>
+\{{/ui-animate}}</code></pre>
+    </div>
+    <div class="col-xs-5">
+      Another thing you can do -- whether it's tacky or not we'll leave to your judgement -- is to repeat the animation to infinity. Of course, we're being a little dramatic by chosing 'infinite' as any integer value is also valid.
     </div>
   </div>
 

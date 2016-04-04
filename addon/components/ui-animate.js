@@ -45,7 +45,6 @@ const animate = Ember.Component.extend({
     if(animator) { el = animator; }
     else if (domElement) {
       el = document.getElementById(domElement);
-      console.log('ID: ', el);
     } else {
       el = document.getElementById(parentView.elementId);
     }
@@ -53,7 +52,6 @@ const animate = Ember.Component.extend({
     return el;
   }),
   registerTargetEvent(evt) {
-    console.log('registering target event: ', evt);
     this.get('_listeners').push(evt);
     this.registerListener(evt.target, evt.type, evt.callback);
   },
@@ -74,12 +72,12 @@ const animate = Ember.Component.extend({
       this.removeEventListener(_domElement, evt, this.stop.bind(this));
     });
   },
-    registerListener(target, type, callback) {
-      const fn = target.addEventListener ? 'addEventListener' : 'attachEvent';
-      const eventName = target.addEventListener ? type : 'on' + type;
+  registerListener(target, type, callback) {
+    const fn = target.addEventListener ? 'addEventListener' : 'attachEvent';
+    const eventName = target.addEventListener ? type : 'on' + type;
 
-      target[fn](eventName, callback);
-    },
+    target[fn](eventName, callback);
+  },
   unregisterListener(target, type, callback) {
     const fn = target.removeEventListener ? 'removeEventListener' : 'detachEvent';
     const eventName = target.addEventListener ? type : 'on' + type;
@@ -89,13 +87,12 @@ const animate = Ember.Component.extend({
   _listeners: computed(() => []),
 
   start(evt) {
-    console.log('start', evt);
     this.registerAnimationEvents();
     if(this.animate) {
       this.animate();
-      if(this.get('repeat')) {
-        this.loop();
-      }
+      // if(this.get('repeat')) { 
+      //   this.loop();
+      // }
     }
   },
   stop() {
@@ -103,29 +100,27 @@ const animate = Ember.Component.extend({
     ANIMATION_EVENTS.split(' ').forEach(evt => {
       this.unregisterListener(_domElement, evt, this.stop.bind(this));
     });
-    const removeClasses = _domElement.className.replace(`animated ${this.get('animation')}`, '');
-    _domElement.className = removeClasses ? removeClasses : '';
-    this.set('_domElement', _domElement);
-  },
-  loop() {
-
+    if (!this.get('infinite')) {
+      const removeClasses = _domElement.className.replace(`animated ${this.get('animation')}`, '');
+      _domElement.className = removeClasses ? removeClasses : '';
+      this.set('_domElement', _domElement);
+    }
   },
   animate() {
-    let {animation, _domElement, duration, delay, iterations} = this.getProperties('animation', '_domElement', 'duration', 'delay', 'iterations');
+    let {animation, _domElement, duration, delay, iterations, infinite} = this.getProperties('animation', '_domElement', 'duration', 'delay', 'iterations', 'infinite');
     if(!_domElement) {
       debug('no DOM element was detected!');
       return;
     }
 
-    run.later(() => {
-      if (duration) {
-        _domElement.style.animationDuration = duration;
-      }
-      if (iterations) {
-        _domElement.style.animationIterationCount = iterations;
-      }
-      _domElement.className += ` animated ${animation}`;
-    }, delay);
+    run.next(() => {
+      if (duration) { _domElement.style.animationDuration = duration + 's'; }
+      if (delay) { _domElement.style.animationDelay = delay + 's'; }
+      if (iterations) { _domElement.style.animationIterationCount = iterations; }
+
+      const toInfinity = infinite ? ' infinite' : '';
+      _domElement.className += ` animated${toInfinity} ${animation}`;
+    });
   },
 });
 animate.reopenClass({
