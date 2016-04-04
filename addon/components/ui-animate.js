@@ -11,7 +11,9 @@ const animate = Ember.Component.extend({
   layout,
   tagName: '',
   event: 'load',
-  delay: 500,
+  delay: 0,
+  iterations: 1,
+  duration: 1,
   repeat: false,
   init() {
     this._super(...arguments);
@@ -51,6 +53,7 @@ const animate = Ember.Component.extend({
     return el;
   }),
   registerTargetEvent(evt) {
+    console.log('registering target event: ', evt);
     this.get('_listeners').push(evt);
     this.registerListener(evt.target, evt.type, evt.callback);
   },
@@ -68,20 +71,20 @@ const animate = Ember.Component.extend({
   removeAnimationEvents() {
     const _domElement = get(this, '_domElement');
     ANIMATION_EVENTS.split(' ').forEach(evt => {
-      this.removeEventListener(_domElement, evt, this.stop);
+      this.removeEventListener(_domElement, evt, this.stop.bind(this));
     });
   },
-  registerListener(target, type, callback) {
-    const addListener = target.addEventListener || target.attachEvent;
+    registerListener(target, type, callback) {
+      const fn = target.addEventListener ? 'addEventListener' : 'attachEvent';
+      const eventName = target.addEventListener ? type : 'on' + type;
+
+      target[fn](eventName, callback);
+    },
+  unregisterListener(target, type, callback) {
+    const fn = target.removeEventListener ? 'removeEventListener' : 'detachEvent';
     const eventName = target.addEventListener ? type : 'on' + type;
 
-    addListener(eventName, callback);
-  },
-  unregisterListener(target, type, callback) {
-    const removeListener = target.removeEventListener || target.detachEvent;
-    const eventName = target.removeEventListener ? type : 'on' + type;
-
-    removeListener(eventName, callback);
+    target[fn](eventName, callback);
   },
   _listeners: computed(() => []),
 
@@ -116,12 +119,10 @@ const animate = Ember.Component.extend({
 
     run.later(() => {
       if (duration) {
-        _domElement.style.mozAnimationDuration = duration;
-        _domElement.style.webkitAnimationDuration = duration;
+        _domElement.style.animationDuration = duration;
       }
       if (iterations) {
-        _domElement.style.mozAnimationIterationCount = iterations;
-        _domElement.style.webkitAnimationIterationCount = iterations;
+        _domElement.style.animationIterationCount = iterations;
       }
       _domElement.className += ` animated ${animation}`;
     }, delay);
