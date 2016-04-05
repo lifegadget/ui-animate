@@ -34,7 +34,6 @@ module.exports = {
         });
 
       } else {
-        // target.import(path.join(app.bowerDirectory, 'animate.css/animate.css'));
         target.import('ui-animate/animate.css');
       }
     },
