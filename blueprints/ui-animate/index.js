@@ -1,17 +1,8 @@
 /*jshint node:true*/
 module.exports = {
-  description: ''
-
-  // locals: function(options) {
-  //   // Return custom template variables here.
-  //   return {
-  //     foo: options.entity.options.foo
-  //   };
-  // }
+  description: 'install some great CSS animations to use out of the box',
 
   afterInstall: function(options) {
-    return this.addBowerPackagesToProject([
-      { name: 'animate.css' }
-    ]);
+    return this.addBowerPackageToProject('animate.css');
   }
 };
