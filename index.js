@@ -4,9 +4,30 @@ const merge = require('merge');
 const fs = require('fs');
 const path = require('path');
 const Funnel = require('broccoli-funnel');
+const MergeTrees = require('broccoli-merge-trees');
+const log = require('broccoli-stew').log;
 
 module.exports = {
   name: 'ui-animate',
+  treeForVendor: function(tree) {
+    var trees = [];
+    if(tree) {
+      trees.push(tree);
+    }
+    var pathToAnimateEntryScript = require.resolve('animate.css');
+    var pathToAnimatePackageRoot = path.dirname(pathToAnimateEntryScript);
+    console.log(`PATH to animate.css: ${pathToAnimatePackageRoot}`);
+    var cssTree = this.treeGenerator(pathToAnimatePackageRoot);
+    log(cssTree, { output: 'tree', name: 'initial-tree'});
+    console.log(`↑↑↑ (CSS TREE ABOVE) ↑↑↑\n`);
+    var cssFunnel = new Funnel(cssTree, { destDir: 'ui-animate' });
+    log(cssFunnel, { output: 'tree', label: 'funnel'});
+    console.log(`↑↑↑ (CSS FUNNEL ABOVE) ↑↑↑\n`);
+
+    trees.push(cssFunnel);
+
+    return new MergeTrees(trees);
+  },
   included(app, parentAddon) {
       const target = (parentAddon || app);
       this._super.included(target);
@@ -38,11 +59,4 @@ module.exports = {
       }
     },
 
-    treeForVendor: function() {
-      var pathToAnimateEntryScript = require.resolve('animate.css');
-      var pathToAnimatePackageRoot = path.dirname(pathToAnimateEntryScript);
-      var tree = this.treeGenerator(pathToAnimatePackageRoot);
-
-      return new Funnel(tree, { destDir: 'ui-animate' });
-    },
   };
