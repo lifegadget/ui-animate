@@ -17,7 +17,6 @@ const animate = Ember.Component.extend({
   repeat: false,
   _repeat: computed('repeat', {
     set(_, value) {
-      console.log('setting _repeat: ', value);
       return value;
     },
     get() {
