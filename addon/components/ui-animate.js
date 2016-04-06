@@ -15,6 +15,14 @@ const animate = Ember.Component.extend({
   iterations: 1,
   duration: 1,
   repeat: false,
+  _repeat: computed('repeat', {
+    set(_, value) {
+      return value;
+    },
+    get() {
+      return this.get('repeat');
+    }
+  }),
   init() {
     this._super(...arguments);
     run.schedule('afterRender', () => {
@@ -69,7 +77,7 @@ const animate = Ember.Component.extend({
   removeAnimationEvents() {
     const _domElement = get(this, '_domElement');
     ANIMATION_EVENTS.split(' ').forEach(evt => {
-      this.removeEventListener(_domElement, evt, this.stop.bind(this));
+      this.unregisterListener(_domElement, evt, this.stop.bind(this));
     });
   },
   registerListener(target, type, callback) {
@@ -86,24 +94,32 @@ const animate = Ember.Component.extend({
   },
   _listeners: computed(() => []),
 
-  start(evt) {
+  start() {
     this.registerAnimationEvents();
     if(this.animate) {
       this.animate();
-      // if(this.get('repeat')) { 
-      //   this.loop();
-      // }
     }
+  },
+  loop() {
+    let _repeat = this.get('_repeat');
+    if (!isNaN(Number(_repeat))) {
+      this.set('_repeat', --_repeat);
+    }
+
+    if(_repeat) { this.animate(); }
   },
   stop() {
     let _domElement = this.get('_domElement');
-    ANIMATION_EVENTS.split(' ').forEach(evt => {
-      this.unregisterListener(_domElement, evt, this.stop.bind(this));
-    });
-    if (!this.get('infinite')) {
-      const removeClasses = _domElement.className.replace(`animated ${this.get('animation')}`, '');
-      _domElement.className = removeClasses ? removeClasses : '';
-      this.set('_domElement', _domElement);
+    const removeClasses = _domElement.className.replace(`animated ${this.get('animation')}`, '');
+    _domElement.className = removeClasses ? removeClasses : '';
+    this.set('_domElement', _domElement);
+
+    if(this.get('repeat')) {
+      run.next(() => {
+        this.loop();
+      });
+    } else {
+      this.removeAnimationEvents();
     }
   },
   animate() {

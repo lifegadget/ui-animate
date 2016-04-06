@@ -7,10 +7,26 @@
 
   <h3>Overview</h3>
   <p>
-    The idea is to provide a CSS based animation primitive which has no dependency on jQuery. It leverages the popular <a href="https://github.com/daneden/animate.css" target="_new">{{ui-label 'animate.css'}}</a> library (which is just a set of CSS animations, no JS). Just 51kb in size.
+    The idea is to provide a CSS based animation primitive which has no dependency on jQuery (or any 3rd party JS). It leverages the popular <a href="https://github.com/daneden/animate.css" target="_new">{{ui-label 'animate.css'}}</a> library (a set of CSS animations, no JS). Just 51kb in size but for those of you feel 51kb is more than you'd like to consume you can be specific about which animations you'd like to use. This is done through the use of one of two parameters (or both):
   </p>
   <p>
-    Refer to the <a href="http://daneden.github.io/animate.css" target="_new">{{ui-label 'animate.css'}}</a> website for all the default animations. If you want to add your own all you need do is define your own class name (and likely a set of <i>@keyframes</i>). Look at the source of the <a href="https://github.com/daneden/animate.css/blob/master/source/attention_seekers/bounce.css">bounce effect</a> to get a feeling for it.
+    <ul>
+      <li>{{ui-pill 'include'}} - an array of specific CSS animations to include</li>
+      <li>{{ui-pill 'includeGroup'}} - an array of CSS groups (such as "attention_seekers", "zooming_exits", etc.). See animate.css website for groups.</li>
+    </ul>
+  </p>
+  <p>
+    So for example, in this demo application we have added the following to our `environment.js` file:
+<pre><code>
+  var ENV = {
+    uiAnimate: {
+      include: ['rollIn'],
+      includeGroup: ['attention_seekers']
+    }
+  }</code></pre>
+  </p>
+  <p>
+    Refer to the <a href="http://daneden.github.io/animate.css" target="_new">{{ui-label 'animate.css'}}</a> website for all the default animations. If you want to add your own all you need do is define your own class name. Look at the source of the <a href="https://github.com/daneden/animate.css/blob/master/source/attention_seekers/bounce.css">bounce effect</a> to get a feeling for how to configure your CSS.
   </p>
 
   <h3>Using as inline component w/in an Ember component</h3>
@@ -70,7 +86,10 @@
         If you want to target any specific DOM element with an animation effect that too is possible by leveraging the <b>domElement</b> property on {{ui-pill 'ui-animate'}}. Doesn't matter if this target is an Ember component or not.
       </p>
       <p>
-        In this example we're also using the <b>delay</b> property which indicates how many miliseconds it should wait before starting the animation. This can be used in conjunction with any of the supported events but will be frequently be used with the default <i>onload</i> event.
+        In this example we're using the <b>delay</b> property which indicates how many miliseconds it should wait before starting the animation. This can be used in conjunction with any of the supported events but will be frequently be used with the default <i>onload</i> event.
+      </p>
+      <p>
+        Finally, we're also specifying an explicit duration of 4 seconds (the default is 1 second) with the <b>duration</b> parameter.
       </p>
     </div>
   </div>
@@ -122,6 +141,25 @@
     </div>
     <div class="col-xs-5">
       Another thing you can do -- whether it's tacky or not we'll leave to your judgement -- is to repeat the animation to infinity. Of course, we're being a little dramatic by chosing 'infinite' as any integer value is also valid.
+    </div>
+  </div>
+
+  <h3>Repetition the sincerest form of flattery</h3>
+  <div class="row">
+    <div class="col-xs-2">
+      {{#ui-animate 'tada' repeat='infinite' delay=2}}
+        {{ui-button title='buy me'}}
+      {{/ui-animate}}
+    </div>
+    <div class="col-xs-5">
+  <pre><code>\{{#ui-animate 'tada' repeat='infinite' delay=2}}
+  &lt;img src='images/buzz-lightyear.png'>
+\{{/ui-animate}}</code></pre>
+    </div>
+    <div class="col-xs-5">
+      <p>
+        <i>Iterations</i> are a CSS property which repeats the animation in immediate succession (once the initial "delay" has passed). <i>Repetition</i> will appear precisely the same if there is no delay but can be useful when teamed up with a delay. A good use case is subtle (or not so subtle) highlighting of a call-to-action button periodically to get the user paying attention to what you want them to.
+      </p>
     </div>
   </div>
 
