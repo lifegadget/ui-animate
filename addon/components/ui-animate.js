@@ -44,15 +44,24 @@ const animate = Ember.Component.extend({
     });
     this.removeAnimationEvents();
   },
+  domClass: undefined,
   domElement: undefined,
+  /**
+   * Will attempt to identify the domElement from the various sources (in order):
+   * 1. if "domElement" set then look for that ID in DOM
+   * 2. if "domClass" set then look for array of dom elements that have class and take first
+   * 3. look at the parentView and resolve using its "elementId" (if tagless you must ensure id exists in template)
+   */
   _domElement: computed('parentView', 'domElement', 'elementId', 'event', function() {
-    const {parentView, domElement, elementId} = this.getProperties('parentView', 'domElement', 'elementId');
+    const {parentView, domElement, domClass, elementId} = this.getProperties('parentView', 'domElement', 'domClass', 'elementId');
     const animator = document.getElementById(`animator-${elementId}`);
 
     let el;
     if(animator) { el = animator; }
     else if (domElement) {
       el = document.getElementById(domElement);
+    } else if (domClass) {
+      el = document.getElementsByClassName(domClass)[0];
     } else {
       el = document.getElementById(parentView.elementId);
     }

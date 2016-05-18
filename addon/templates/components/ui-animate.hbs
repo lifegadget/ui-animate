@@ -1,7 +1,12 @@
 {{#if hasBlock}}
-  <div id="animator-{{elementId}}" style="animation-duration: {{duration}}s; animation-iteration-count: {{iterations}};">
+  <div
+    id="animator-{{elementId}}"
+    class="{{class}}"
+    style="animation-duration: {{duration}}s; animation-iteration-count: {{iterations}};"
+  >
     {{yield}}
   </div>
 {{else}}
   {{! inline uses ID of parent container as target }}
+  <animation id={{elementId}} class="{{class}} inline on-{{event}} {{animation}}{{if domElement (concat ' target-' domElement)}}" />
 {{/if}}

@@ -89,7 +89,7 @@
         In this example we're using the <b>delay</b> property which indicates how many miliseconds it should wait before starting the animation. This can be used in conjunction with any of the supported events but will be frequently be used with the default <i>onload</i> event.
       </p>
       <p>
-        Finally, we're also specifying an explicit duration of 4 seconds (the default is 1 second) with the <b>duration</b> parameter.
+        Also note we're specifying an explicit duration of 4 seconds (the default is 1 second) with the <b>duration</b> parameter. Finally, if you don't have an explicit "DOM id" you can set the {{ui-label 'domClass'}} property instead (do not include the standard jQuery 'dot' in the name). This will attach the animation to the <i>first</i> DOM instance which has the class.
       </p>
     </div>
   </div>
@@ -119,10 +119,10 @@
         Possibly the nicest way to use this component is as a <i>block component</i>. It will wrap whatever you put inside the block and animate it.
       </p>
       <p>
-        This example also illustrates the use of different event ... a "click" in this case ... instead of the default of "load". You can use any DOM event you like here.
+        This example also illustrates the use of different event ... a "click" in this case ... instead of the default of "load". You can use any DOM event you like here or even use bespoke events for signalling.
       </p>
       <p>
-        Also note that in this use-case, it matters not whether the surrounding content is block-style or not, nor does it matter contained components are
+        Also note that in this use-case, it matters not whether the surrounding content is block-style or not, nor does it matter contained components are tagless.
       </p>
     </div>
   </div>
