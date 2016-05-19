@@ -147,13 +147,19 @@
   <h3>Repetition the sincerest form of flattery</h3>
   <div class="row">
     <div class="col-xs-2">
-      {{#ui-animate 'tada' repeat='infinite' delay=2}}
+      {{#ui-animate 'tada'
+        repeat='infinite'
+        delay=2
+      }}
         {{ui-button title='buy me'}}
       {{/ui-animate}}
     </div>
     <div class="col-xs-5">
-  <pre><code>\{{#ui-animate 'tada' repeat='infinite' delay=2}}
-  &lt;img src='images/buzz-lightyear.png'>
+  <pre><code>\{{#ui-animate 'tada'
+  repeat='infinite'
+  delay=2
+}}
+  \{{ui-button title='buy me'}}
 \{{/ui-animate}}</code></pre>
     </div>
     <div class="col-xs-5">
@@ -163,6 +169,86 @@
     </div>
   </div>
 
+  <h3>Pre &amp; Post Conditions, Bespoke Events</h3>
+  <div class="row">
+    <div class="col-xs-2">
+      {{ui-animate 'fadeOut'
+        event='click'
+        exit=true
+        domElement='exit-button'
+      }}
+      {{ui-animate 'zoomIn'
+        enter=true
+        event='bespoke'
+        domElement='hello-button'
+      }}
+      {{ui-animate 'fadeOutDown'
+        exit=true
+        event='click'
+        domElement='hello-button'
+        onCompletion=(action 'allGone')
+      }}
+
+      {{ui-button
+        id='exit-button'
+        title='exit me'
+        onClick=(action 'nextButtonPlease')
+      }}
+      {{ui-button
+        id='hello-button'
+        title='hello'
+      }}
+    </div>
+    <div class="col-xs-4">
+  <pre><code>\{{ui-animate 'fadeOut'
+  event='click'
+  exit=true
+  domElement='exit-button'
+}}
+\{{ui-animate 'zoomIn'
+  event='bespoke'
+  enter=true
+  domElement='hello-button'
+}}
+\{{ui-animate 'fadeOutDown'
+  event='click'
+  exit=true
+  domElement='hello-button'
+  onCompletion=(action 'allGone')
+}}
+
+\{{ui-button
+  id='exit-button'
+  title='exit me'
+  onClick=(action 'nextButtonPlease')
+}}
+\{{ui-button
+  id='hello-button'
+  title='hello'
+}}</code></pre>
+    </div>
+    <div class="col-xs-6">
+      <p>
+        In the examples above you either had a "onload" event trigger (which somewhat masks pre-conditions) or an effect which completes in the same state as it starts (aka, the "attention grabbers"). There are, however, two important families of use-cases where you are "entering" and "exiting" a part of the DOM.
+      </p>
+      <p>
+        In these situations you typically will have to ensure that the starting state (aka, pre-condition) and ending states (post-condition) are appropriately visible/not-visible. The animation from the library is only responsible for the movement between the two states.
+      </p>
+      <p>
+        In this example, press the button for a <i>fadeOut</i> animation of the visible button. That will in turn, trigger a bespoke event which an initially hidden button receives and causes it to appear using the <i>zoomIn</i> animation.
+      </p>
+      <p>
+        Here, we've taken advantage of the {{ui-label 'enter'}} and {{ui-label 'exit'}} properties which indicate the use-case of the annimation. When _enter_ is set to true then the CSS class {{ui-pill 'animation-ready'}} class is added on load and removed immediately before the animation. Similarly the _exit_ property set to true, a CSS class {{ui-pill 'animation-done'}} is added directly after the animation. By default, both CSS properties are simply set to <code>opacity: 0;</code>.
+      </p>
+
+      <p>
+        On the demo app's controller, take a look at the action to see how we're creating and dispatching our custom event which we've called {{ui-pill 'bespoke'}}. This allows the initial button press to trigger the second button's entrance.
+      </p>
+      <p>
+        Finally, we've added an action to the animator's {{ui-label 'onCompletion'}} event which means that when the second button is finished exiting we can take over execution. Look at the console for a message when this event is triggered. Last point on this topic ... there is also a {{ui-label 'onLoopCompletion'}} event that can be listened to which fires at the completion of each animation dictated by the <i>repeat</i> property.
+      </p>
+    </div>
+  </div>
 </div>
 <p>
   <br>

@@ -12,7 +12,7 @@ const chalk = require('chalk');
 
 Array.prototype.contains = function (element) {
   for (var i = 0; i < this.length; i++) {
-      if (this[i] == element) {
+      if (this[i] === element) {
           return true;
       }
   }
@@ -77,6 +77,8 @@ module.exports = {
 
         // add basic animation support
         target.import(`${sourceDir}/_base.css`);
+        // addon-specific (very minor)
+        app.import('vendor/ui-animate/ui-animate.css');
 
         // safety: ensure include is an array
         if(typeof o.include === 'string') {

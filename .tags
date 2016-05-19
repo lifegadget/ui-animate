@@ -6857,7 +6857,7 @@ uc.micro	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^    "uc.micro": 
 uglify-js	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^    "uglify-js": {$/;"	f
 uglify-to-browserify	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^    "uglify-to-browserify": {$/;"	f
 ui-bootstrap	package.json	/^    "ui-bootstrap": "0.0.24",$/;"	f
-ui-button	package.json	/^    "ui-button": "^2.0.0-beta.2",$/;"	f
+ui-button	package.json	/^    "ui-button": "^2.0.0-beta.10",$/;"	f
 ui-icon	package.json	/^    "ui-icon": "0.9.4",$/;"	f
 ui-image	package.json	/^    "ui-image": "^0.1.3"$/;"	f
 uid-number	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^        "uid-number": {$/;"	f
@@ -7352,7 +7352,7 @@ version	bower_components/ember/package.json	/^  "version": "2.4.3",$/;"	f
 version	bower_components/fontawesome/.bower.json	/^  "version": "4.5.0",$/;"	f
 version	bower_components/jquery/.bower.json	/^  "version": "2.2.2",$/;"	f
 version	bower_components/qunit-notifications/.bower.json	/^  "version": "0.1.0",$/;"	f
-version	package.json	/^  "version": "0.2.4",$/;"	f
+version	package.json	/^  "version": "0.2.5",$/;"	f
 vow	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^        "vow": {$/;"	f
 vow	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^    "vow": {$/;"	f
 vow-fs	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^        "vow-fs": {$/;"	f

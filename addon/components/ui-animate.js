@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from '../templates/components/ui-animate';
+import ddau from '../mixins/ddau';
 const { keys, create } = Object; // jshint ignore:line
 const { inject: {service} } = Ember; // jshint ignore:line
 const { computed, observe, $, run, on, typeOf } = Ember;  // jshint ignore:line
@@ -7,13 +8,15 @@ const { get, set, debug } = Ember; // jshint ignore:line
 const a = Ember.A; // jshint ignore:line
 const ANIMATION_EVENTS = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
-const animate = Ember.Component.extend({
+const animate = Ember.Component.extend(ddau,{
   layout,
   tagName: '',
   event: 'load',
   delay: 0,
   iterations: 1,
   duration: 1,
+  exit: false,
+  enter: false,
   repeat: false,
   _repeat: computed('repeat', {
     set(_, value) {
@@ -26,7 +29,14 @@ const animate = Ember.Component.extend({
   init() {
     this._super(...arguments);
     run.schedule('afterRender', () => {
-      const {event, _domElement} = this.getProperties('event', '_domElement');
+      const {enter, event, _domElement} = this.getProperties('enter', 'event', '_domElement');
+      if(enter) {
+        if(_domElement.className) {
+          _domElement.className += ' animation-ready';
+        } else {
+          _domElement.className = 'animation-ready';
+        }
+      }
       if(this.get('event') === 'load') {
         this.start();
       } else {
@@ -46,6 +56,10 @@ const animate = Ember.Component.extend({
   },
   domClass: undefined,
   domElement: undefined,
+  hasBlockJs: computed(function() {
+    this.set('blockAnimation', true);
+  }),
+  blockAnimation: false,
   /**
    * Will attempt to identify the domElement from the various sources (in order):
    * 1. if "domElement" set then look for that ID in DOM
@@ -53,17 +67,17 @@ const animate = Ember.Component.extend({
    * 3. look at the parentView and resolve using its "elementId" (if tagless you must ensure id exists in template)
    */
   _domElement: computed('parentView', 'domElement', 'elementId', 'event', function() {
-    const {parentView, domElement, domClass, elementId} = this.getProperties('parentView', 'domElement', 'domClass', 'elementId');
-    const animator = document.getElementById(`animator-${elementId}`);
+    const {parentView, domElement, domClass, elementId, blockAnimation} = this.getProperties('parentView', 'domElement', 'domClass', 'elementId', 'blockAnimation');
+    const animator = window.document.getElementById(`${elementId}`);
 
     let el;
-    if(animator) { el = animator; }
+    if(animator && blockAnimation) { el = animator; }
     else if (domElement) {
-      el = document.getElementById(domElement);
+      el = window.document.getElementById(domElement);
     } else if (domClass) {
-      el = document.getElementsByClassName(domClass)[0];
+      el = window.document.getElementsByClassName(domClass)[0];
     } else {
-      el = document.getElementById(parentView.elementId);
+      el = window.document.getElementById(parentView.elementId);
     }
 
     return el;
@@ -90,10 +104,14 @@ const animate = Ember.Component.extend({
     });
   },
   registerListener(target, type, callback) {
-    const fn = target.addEventListener ? 'addEventListener' : 'attachEvent';
-    const eventName = target.addEventListener ? type : 'on' + type;
+    if (!target) {
+      debug(`No target for event for ${type} event. Check your targetted DOM element exists.`);
+    } else {
+      const fn = target.addEventListener ? 'addEventListener' : 'attachEvent';
+      const eventName = target.addEventListener ? type : 'on' + type;
 
-    target[fn](eventName, callback);
+      target[fn](eventName, callback);
+    }
   },
   unregisterListener(target, type, callback) {
     const fn = target.removeEventListener ? 'removeEventListener' : 'detachEvent';
@@ -105,6 +123,10 @@ const animate = Ember.Component.extend({
 
   start() {
     this.registerAnimationEvents();
+    if(this.get('enter')) {
+      const className = this.get('_domElement').className.replace(/ *animation-ready/, '');
+      this.get('_domElement').className = className;
+    }
     if(this.animate) {
       this.animate();
     }
@@ -118,17 +140,25 @@ const animate = Ember.Component.extend({
     if(_repeat) { this.animate(); }
   },
   stop() {
-    let _domElement = this.get('_domElement');
-    const removeClasses = _domElement.className.replace(`animated ${this.get('animation')}`, '');
-    _domElement.className = removeClasses ? removeClasses : '';
-    this.set('_domElement', _domElement);
+    const {_domElement, repeat, exit} = this.getProperties('_domElement', 'repeat', 'exit');
+    _domElement.className = _domElement.className.replace(`animated ${this.get('animation')}`, '');
 
-    if(this.get('repeat')) {
+    if(repeat) {
       run.next(() => {
+        this.ddau('onLoopCompletion', this, this);
         this.loop();
       });
     } else {
+      this.ddau('onCompletion', this, this);
       this.removeAnimationEvents();
+    }
+
+    if(exit) {
+      if (_domElement.className) {
+        _domElement.className += ' animation-done';
+      } else {
+        _domElement.className = 'animation-done';
+      }
     }
   },
   animate() {

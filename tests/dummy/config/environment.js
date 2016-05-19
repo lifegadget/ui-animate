@@ -7,7 +7,7 @@ module.exports = function(environment) {
     },
     uiAnimate: {
       include: ['rollIn', 'attention_seekers/rubberBand'],
-      includeGroup: ['attention_seekers']
+      includeGroup: ['attention_seekers', 'fading_entrances', 'fading_exits', 'zooming_entrances']
     },
     modulePrefix: 'dummy',
     environment: environment,
