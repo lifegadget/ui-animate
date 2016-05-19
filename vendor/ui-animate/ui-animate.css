@@ -1,0 +1,13 @@
+animation {
+  display: block;
+}
+animation.inline {
+  display: inherit;
+}
+
+.animation-done {
+  opacity: 0;
+}
+.animation-ready {
+  opacity: 0;
+}
