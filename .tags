@@ -2694,6 +2694,7 @@ file-sync-cmp	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^    "file-s
 files	bower_components/bootstrap/package.json	/^  "files": [$/;"	f
 files	bower_components/ember/composer.json	/^      "files": [$/;"	f
 files	bower_components/ember/ember-docs.json	/^    "files": {$/;"	f
+files	package.json	/^  "files": [$/;"	f
 final	bower_components/ember/ember-docs.json	/^            "final": 1,$/;"	f
 finalhandler	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^    "finalhandler": {$/;"	f
 find-up	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^    "find-up": {$/;"	f

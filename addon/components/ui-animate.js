@@ -105,7 +105,9 @@ const animate = Ember.Component.extend(ddau,{
   },
   registerListener(target, type, callback) {
     if (!target) {
-      debug(`No target for event for ${type} event. Check your targetted DOM element exists.`);
+      const {animation,domElement,domClass} = this.getProperties('animation', 'domElement', 'domClass');
+      const target = domElement || domClass;
+      debug(`ui-animate: no target for event "${type}" event. Check your targetted DOM element exists ("${animation}" → "${target}").`);
     } else {
       const fn = target.addEventListener ? 'addEventListener' : 'attachEvent';
       const eventName = target.addEventListener ? type : 'on' + type;

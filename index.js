@@ -20,7 +20,6 @@ Array.prototype.contains = function (element) {
   return false;
 };
 
-
 module.exports = {
   name: 'ui-animate',
   treeForVendor: function(tree) {
@@ -78,7 +77,7 @@ module.exports = {
         // add basic animation support
         target.import(`${sourceDir}/_base.css`);
         // addon-specific (very minor)
-        app.import('vendor/ui-animate/ui-animate.css');
+        target.import('vendor/ui-animate/ui-animate.css');
 
         // safety: ensure include is an array
         if(typeof o.include === 'string') {

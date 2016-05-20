@@ -1,6 +1,6 @@
 {
   "name": "ui-animate",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Powerful CSS animations in a snap",
   "directories": {
     "doc": "doc",
@@ -15,6 +15,19 @@
   "engines": {
     "node": ">= 0.10.0"
   },
+  "files": [
+    "ember-cli-build.js",
+    "LICENSE.md",
+    "README.md",
+    "addon",
+    "blueprints",
+    "app",
+    "bower.json",
+    "index.js",
+    "package.json",
+    "testem.json",
+    "vendor"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
