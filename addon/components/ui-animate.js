@@ -140,16 +140,14 @@ const animate = Ember.Component.extend(ddau,{
                       .replace(/ *animation-ready/, '');
     _domElement.className = removal;
     if(enter) {
-      console.log(`animation for ${this.get('domClass')} was ENTER`);
+      // TODO
     }
     if(exit) {
-      console.log(`animation for ${this.get('domClass')} was EXIT`);
+      // TODO
     }
-    console.log('classes after removal are: ', removal);
   },
 
   start() {
-    console.log(`starting ${this.get('domClass')}: `, this.get('exit') ? 'exit is true' : 'exit is false');
     this.registerAnimationEvents();
     this.removeStrayAnimationClasses();
     if(this.animate) {
@@ -184,7 +182,6 @@ const animate = Ember.Component.extend(ddau,{
       } else {
         _domElement.className = 'animation-done';
       }
-      console.log(`because of "exit animation", ${this.get('domClass')} classes are now:`, _domElement.className);
     }
   },
   animate() {

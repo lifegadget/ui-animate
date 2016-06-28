@@ -12,7 +12,6 @@ export default Ember.Controller.extend({
     nextButtonPlease() {
       const target = window.document.getElementById('hello-button');
       const event = new window.CustomEvent('bespoke');
-      console.log('firing custom event on ', target);
       target.dispatchEvent(event);
     },
     allGone() {
