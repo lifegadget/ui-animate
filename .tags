@@ -7359,7 +7359,7 @@ version	bower_components/ember/package.json	/^  "version": "2.4.3",$/;"	f
 version	bower_components/fontawesome/.bower.json	/^  "version": "4.5.0",$/;"	f
 version	bower_components/jquery/.bower.json	/^  "version": "2.2.2",$/;"	f
 version	bower_components/qunit-notifications/.bower.json	/^  "version": "0.1.0",$/;"	f
-version	package.json	/^  "version": "0.2.5",$/;"	f
+version	package.json	/^  "version": "0.2.7",$/;"	f
 vow	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^        "vow": {$/;"	f
 vow	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^    "vow": {$/;"	f
 vow-fs	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^        "vow-fs": {$/;"	f

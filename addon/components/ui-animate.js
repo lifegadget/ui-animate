@@ -28,6 +28,9 @@ const animate = Ember.Component.extend(ddau,{
   }),
   init() {
     this._super(...arguments);
+    if(!this.elementId) {
+      this.set('elementId', 'ember-' + Math.random().toString(36).substr(2, 9));
+    }
     run.schedule('afterRender', () => {
       const {enter, event, _domElement} = this.getProperties('enter', 'event', '_domElement');
       if(enter) {
@@ -93,21 +96,23 @@ const animate = Ember.Component.extend(ddau,{
   },
   registerAnimationEvents() {
     const _domElement = get(this, '_domElement');
-    ANIMATION_EVENTS.split(' ').forEach(evt => {
-      this.registerListener(_domElement, evt, this.stop.bind(this));
-    });
+    $(_domElement).one(ANIMATION_EVENTS, this.stop.bind(this));
+    // ANIMATION_EVENTS.split(' ').forEach(evt => {
+      // this.registerListener(_domElement, evt, this.stop.bind(this));
+    // });
   },
   removeAnimationEvents() {
-    const _domElement = get(this, '_domElement');
-    ANIMATION_EVENTS.split(' ').forEach(evt => {
-      this.unregisterListener(_domElement, evt, this.stop.bind(this));
-    });
+    // TODO:  unnecessary while using jQuery's one() but would like to move back to native
+    // const _domElement = get(this, '_domElement');
+    // ANIMATION_EVENTS.split(' ').forEach(evt => {
+      // this.unregisterListener(_domElement, evt, this.stop);
+    // });
   },
   registerListener(target, type, callback) {
     if (!target) {
       const {animation,domElement,domClass} = this.getProperties('animation', 'domElement', 'domClass');
-      const target = domElement || domClass;
-      debug(`ui-animate: no target for event "${type}" event. Check your targetted DOM element exists ("${animation}" → "${target}").`);
+      const expectedTarget = domElement || domClass;
+      debug(`ui-animate: no target for event "${type}" event. Check your targetted DOM element exists ("${animation}" → "${expectedTarget}").`);
     } else {
       const fn = target.addEventListener ? 'addEventListener' : 'attachEvent';
       const eventName = target.addEventListener ? type : 'on' + type;
@@ -117,18 +122,36 @@ const animate = Ember.Component.extend(ddau,{
   },
   unregisterListener(target, type, callback) {
     const fn = target.removeEventListener ? 'removeEventListener' : 'detachEvent';
-    const eventName = target.addEventListener ? type : 'on' + type;
+    const eventName = target.removeEventListener ? type : 'on' + type;
 
     target[fn](eventName, callback);
   },
   _listeners: computed(() => []),
+  /**
+   * In cases where you are toggling back and forth between
+   * an "enter" and "exit" animation, you need to ensure that
+   *
+   */
+  removeStrayAnimationClasses() {
+    const {enter, exit, _domElement} = this.getProperties('enter', 'exit', '_domElement');
+    // transitioning to enter animation
+    const removal = _domElement.className
+                      .replace(/ *animation-done/, '')
+                      .replace(/ *animation-ready/, '');
+    _domElement.className = removal;
+    if(enter) {
+      console.log(`animation for ${this.get('domClass')} was ENTER`);
+    }
+    if(exit) {
+      console.log(`animation for ${this.get('domClass')} was EXIT`);
+    }
+    console.log('classes after removal are: ', removal);
+  },
 
   start() {
+    console.log(`starting ${this.get('domClass')}: `, this.get('exit') ? 'exit is true' : 'exit is false');
     this.registerAnimationEvents();
-    if(this.get('enter')) {
-      const className = this.get('_domElement').className.replace(/ *animation-ready/, '');
-      this.get('_domElement').className = className;
-    }
+    this.removeStrayAnimationClasses();
     if(this.animate) {
       this.animate();
     }
@@ -161,6 +184,7 @@ const animate = Ember.Component.extend(ddau,{
       } else {
         _domElement.className = 'animation-done';
       }
+      console.log(`because of "exit animation", ${this.get('domClass')} classes are now:`, _domElement.className);
     }
   },
   animate() {
