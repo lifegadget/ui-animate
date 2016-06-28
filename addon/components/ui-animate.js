@@ -28,7 +28,7 @@ const animate = Ember.Component.extend(ddau,{
   }),
   init() {
     this._super(...arguments);
-    if(!this.elementId) {
+    if(!this.get('elementId')) {
       this.set('elementId', 'ember-' + Math.random().toString(36).substr(2, 9));
     }
     run.schedule('afterRender', () => {
