@@ -7359,7 +7359,7 @@ version	bower_components/ember/package.json	/^  "version": "2.4.3",$/;"	f
 version	bower_components/fontawesome/.bower.json	/^  "version": "4.5.0",$/;"	f
 version	bower_components/jquery/.bower.json	/^  "version": "2.2.2",$/;"	f
 version	bower_components/qunit-notifications/.bower.json	/^  "version": "0.1.0",$/;"	f
-version	package.json	/^  "version": "0.2.7",$/;"	f
+version	package.json	/^  "version": "0.3.0",$/;"	f
 vow	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^        "vow": {$/;"	f
 vow	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^    "vow": {$/;"	f
 vow-fs	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^        "vow-fs": {$/;"	f
@@ -7403,3 +7403,12 @@ yargs	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^    "yargs": {$/;"	
 zip-stream	bower_components/bootstrap/grunt/npm-shrinkwrap.json	/^    "zip-stream": {$/;"	f
 zooming_entrances	bower_components/animate.css/animate-config.json	/^  "zooming_entrances": [$/;"	f
 zooming_exits	bower_components/animate.css/animate-config.json	/^  "zooming_exits": [$/;"	f
+contains	/Volumes/PEGASUS/repos/mine/ui-animate/index.js	/^Array.prototype.contains = function (element) {$/;"	function	line:13
+Array	/Volumes/PEGASUS/repos/mine/ui-animate/index.js	/^const chalk = require('chalk');$/;"	class	line:11
+Array.contains	/Volumes/PEGASUS/repos/mine/ui-animate/index.js	/^Array.prototype.contains = function (element) {$/;"	method	line:13
+module.exports.name	/Volumes/PEGASUS/repos/mine/ui-animate/index.js	/^module.exports = {$/;"	property	line:23
+treeForVendor	/Volumes/PEGASUS/repos/mine/ui-animate/index.js	/^  treeForVendor: function(tree) {$/;"	function	line:25
+module.exports.treeForVendor	/Volumes/PEGASUS/repos/mine/ui-animate/index.js	/^  name: 'ui-animate',$/;"	method	line:24
+getFiles	/Volumes/PEGASUS/repos/mine/ui-animate/index.js	/^  getFiles() {$/;"	function	line:44
+findFile	/Volumes/PEGASUS/repos/mine/ui-animate/index.js	/^  findFile(fileRef, files) {$/;"	function	line:55
+included	/Volumes/PEGASUS/repos/mine/ui-animate/index.js	/^  included(app, parentAddon) {$/;"	function	line:65

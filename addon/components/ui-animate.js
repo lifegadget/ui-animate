@@ -26,11 +26,9 @@ const animate = Ember.Component.extend(ddau,{
       return this.get('repeat');
     }
   }),
+  id: computed(() => 'ember-' + Math.random().toString(36).substr(2, 9)),
   init() {
     this._super(...arguments);
-    if(!this.get('elementId')) {
-      this.set('elementId', 'ember-' + Math.random().toString(36).substr(2, 9));
-    }
     run.schedule('afterRender', () => {
       const {enter, event, _domElement} = this.getProperties('enter', 'event', '_domElement');
       if(enter) {
@@ -69,9 +67,9 @@ const animate = Ember.Component.extend(ddau,{
    * 2. if "domClass" set then look for array of dom elements that have class and take first
    * 3. look at the parentView and resolve using its "elementId" (if tagless you must ensure id exists in template)
    */
-  _domElement: computed('parentView', 'domElement', 'elementId', 'event', function() {
-    const {parentView, domElement, domClass, elementId, blockAnimation} = this.getProperties('parentView', 'domElement', 'domClass', 'elementId', 'blockAnimation');
-    const animator = window.document.getElementById(`${elementId}`);
+  _domElement: computed('parentView', 'domElement', 'id', 'event', function() {
+    const {parentView, domElement, domClass, id, blockAnimation} = this.getProperties('parentView', 'domElement', 'domClass', 'id', 'blockAnimation');
+    const animator = window.document.getElementById(`${id}`);
 
     let el;
     if(animator && blockAnimation) { el = animator; }
@@ -80,7 +78,7 @@ const animate = Ember.Component.extend(ddau,{
     } else if (domClass) {
       el = window.document.getElementsByClassName(domClass)[0];
     } else {
-      el = window.document.getElementById(parentView.elementId);
+      el = window.document.getElementById(parentView.id || parentView.elementId);
     }
 
     return el;

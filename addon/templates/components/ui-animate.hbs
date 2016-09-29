@@ -1,7 +1,7 @@
 {{#if hasBlock}}
   {{hasBlockJs}}
   <animation
-    id="{{elementId}}"
+    id="{{id}}"
     class="{{if class (concat ' ' class)}}block-animation"
     style="animation-duration: {{duration}}s; animation-iteration-count: {{iterations}};"
   >
@@ -9,5 +9,5 @@
   </animation>
 {{else}}
   {{! inline uses ID of parent container as target }}
-  <animation id={{elementId}} class="{{if class (concat ' ' class)}}inline-animation on-{{event}} animation-{{animation}}{{if domElement (concat ' target-' domElement)}}" />
+  <animation id={{id}} class="{{if class (concat ' ' class)}}inline-animation on-{{event}} animation-{{animation}}{{if domElement (concat ' target-' domElement)}}" />
 {{/if}}
