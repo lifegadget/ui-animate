@@ -1,0 +1,49 @@
+{{#if transitioningIn}}
+  {{#each entering as |item|}}
+    {{ui-animate _animate.in
+      domElement=item
+      class='in'
+      enter=true
+      duration=duration
+      onCompletion=(action 'completed' item 'in' false)
+    }}
+  {{/each}}
+{{/if}}
+
+{{#if transitioningOut}}
+  {{#each exiting as |item|}}
+    {{ui-animate _animate.out
+      domElement=item
+      class='out'
+      exit=true
+      duration=duration
+      onCompletion=(action 'completed' item 'out' false)
+    }}
+  {{/each}}
+{{/if}}
+
+{{#if reversingIn}}
+  {{#each entering as |item|}}
+    {{ui-animate _animate.in
+      domElement=item
+      enter=true
+      duration=duration
+      onCompletion=(action 'completed' item 'in' true)
+    }}
+  {{/each}}
+{{/if}}
+
+{{#if reversingOut}}
+  {{#each exiting as |item|}}
+    {{ui-animate _animate.in
+      domElement=item
+      exit=true
+      duration=duration
+      onCompletion=(action 'completed' item 'out' true)
+    }}
+  {{/each}}
+{{/if}}
+
+{{#if hasBlock}}
+  {{yield yieldedProps}}
+{{/if}}

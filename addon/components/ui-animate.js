@@ -149,6 +149,7 @@ const animate = Ember.Component.extend(ddau,{
     this.registerAnimationEvents();
     this.removeStrayAnimationClasses();
     if(this.animate) {
+      this.ddau('onStart', this, this);
       this.animate();
     }
   },
@@ -161,7 +162,7 @@ const animate = Ember.Component.extend(ddau,{
     if(_repeat) { this.animate(); }
   },
   stop() {
-    const {_domElement, repeat, exit} = this.getProperties('_domElement', 'repeat', 'exit');
+    const {_domElement, repeat, exit, enter} = this.getProperties('_domElement', 'repeat', 'exit', 'enter');
     _domElement.className = _domElement.className.replace(`animated ${this.get('animation')}`, '');
 
     if(repeat) {
@@ -175,11 +176,10 @@ const animate = Ember.Component.extend(ddau,{
     }
 
     if(exit) {
-      if (_domElement.className) {
-        _domElement.className += ' animation-done';
-      } else {
-        _domElement.className = 'animation-done';
-      }
+      _domElement.classList.add('animation-done');
+    }
+    if(enter) {
+      _domElement.classList.remove('animation-ready');
     }
   },
   animate() {

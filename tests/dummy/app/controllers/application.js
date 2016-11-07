@@ -8,6 +8,11 @@ const a = Ember.A; // jshint ignore:line
 
 
 export default Ember.Controller.extend({
+  itemsSelected: ['buz'],
+  maxItems: '1',
+  parallel: true,
+  duration: '2',
+
   actions: {
     nextButtonPlease() {
       const target = window.document.getElementById('hello-button');

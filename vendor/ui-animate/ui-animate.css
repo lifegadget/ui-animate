@@ -8,6 +8,34 @@ animation.inline {
 .animation-done {
   opacity: 0;
 }
+
+.animation-done.in {
+  opacity: 100;
+}
+
 .animation-ready {
   opacity: 0;
+}
+
+transition {
+  /*display: none;*/
+  display: flex;
+  flex-direction: row;
+}
+
+transition.initialized {
+  display: flex;
+}
+
+transition.vertical {
+  flex-direction: column;
+}
+
+transition .transition-target {
+  position: absolute;
+  top: 0;
+}
+
+transition .hidden {
+  /*display: none;*/
 }
