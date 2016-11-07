@@ -13,7 +13,7 @@ const dasherize = thingy => {
 const transition = Ember.Component.extend({
   layout,
   tagName: 'transition',
-  classNameBindings: ['initialized'],
+  classNameBindings: ['initialized', 'stage'],
   attributeBindings: ['name'],
 
   init() {
@@ -54,6 +54,7 @@ const transition = Ember.Component.extend({
   }),
 
   name: 'unnamed-transition',
+  inParallel: true,
 
   animate: null,
   _animate: computed('animate', function() {
@@ -87,11 +88,10 @@ const transition = Ember.Component.extend({
   showed: null, // the last known state of "show"
   onShowChange: observer('show', function() {
     const { _show, showed, inParallel } = this.getProperties('_show', 'showed', 'inParallel');
-    const unchanged = _.intersection(_show, showed);
+    // const unchanged = _.intersection(_show, showed);
     const entered = _.difference(_show, showed).map(name => this._domElements[name]);
     const exited = _.difference(showed, _show).map(name => this._domElements[name]);
     this.set('showed', _show);
-    console.log({unchanged, entered, exited});
     if (entered) {
       this._addReadiness(entered);
       this._removeHidden(entered);
@@ -143,10 +143,11 @@ const transition = Ember.Component.extend({
     return {
       width: window.document.getElementById(element).width,
       height: window.document.getElementById(element).height,
-    }
+    };
   },
 
   duration: 1,
+  stage: 'shared',
 
   // ANIMATION EVENT STATES
   transitioningIn: false,
@@ -160,7 +161,6 @@ const transition = Ember.Component.extend({
   actions: {
     completed(item, direction, isReversed) {
       const { inParallel } = this.getProperties('inParallel');
-      console.log({item, direction, isReversed});
       if (direction === 'out') {
         this.set('transitioningOut', false);
         // this._hide(item);

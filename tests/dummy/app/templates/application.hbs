@@ -148,7 +148,7 @@
   <div class="row">
     <div class="col-xs-2">
       {{#ui-animate 'tada'
-        repeat='infinite'
+        repeat=9999
         delay=2
       }}
         {{ui-button title='buy me'}}
@@ -260,6 +260,7 @@
         class='vertical'
         names='buz,woody,jessie'
         show=itemsSelected
+        stage=stage
         ordered=ordered
         inParallel=parallel
         duration=duration
@@ -278,6 +279,7 @@
   reverse='fadeInLeft,fadeOutRight'{{/if}}
   show='{{itemsSelected}}'
   ordered={{ordered}}
+  stage="{{stage}}"
   inParallel={{parallel}}
   duration={{duration}}
   as |t|
@@ -313,6 +315,16 @@
           this just constrains the button selector above, not
           directly related to an animation feature
         </note>
+      </p>
+      <p>
+        how should we organise the stage area:
+        <br>
+        {{ui-buttons
+          buttons='shared,isolated,reserved'
+          value=stage
+          cardinality='1:1'
+          onChange=(mut stage)
+        }}
       </p>
       <p>
         should animation be ordered?

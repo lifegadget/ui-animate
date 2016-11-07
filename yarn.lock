@@ -1722,6 +1722,14 @@ ember-load-initializers@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/ember-load-initializers/-/ember-load-initializers-0.5.1.tgz#76e3db23c111dbdcd3ae6f687036bf0b56be0cbe"
 
+ember-lodash@0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/ember-lodash/-/ember-lodash-0.0.11.tgz#4c27298c02e8da0e92e1f9018dc1bc6a01cb1fac"
+  dependencies:
+    broccoli-merge-trees "^1.1.1"
+    ember-cli-babel "^5.1.6"
+    lodash-es "^3.10.0"
+
 ember-modal@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/ember-modal/-/ember-modal-0.1.0.tgz#f314f822b8359b3566c5d07a4bcdb95193767e62"
@@ -2896,6 +2904,10 @@ loader.js@^4.0.1:
 lockfile@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/lockfile/-/lockfile-1.0.2.tgz#97e1990174f696cbe0a3acd58a43b84aa30c7c83"
+
+lodash-es@^3.10.0:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-3.10.1.tgz#a1c85d9829c9009004339dc3846dbabb46cf4e19"
 
 lodash-node@^2.4.1:
   version "2.4.1"

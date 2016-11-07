@@ -12,6 +12,7 @@ export default Ember.Controller.extend({
   maxItems: '1',
   parallel: true,
   duration: '2',
+  stage: 'shared',
 
   actions: {
     nextButtonPlease() {
